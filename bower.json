@@ -1,0 +1,22 @@
+{
+  "name": "pixi-dust",
+  "version": "0.1.0",
+  "authors": [
+    "Matt Styles <matt@veryfizzyjelly.com>"
+  ],
+  "description": "Particle emitter for PIXI",
+  "main": "lib/pixi-dust.js",
+  "keywords": [
+    "PIXI",
+    "particle",
+    "emitter"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
