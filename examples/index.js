@@ -41,7 +41,6 @@ stage.addChild( ps );
 
 // Start render loop
 requestAnimationFrame( animate );
-
 function animate() {
 
     stats.begin();
@@ -56,35 +55,44 @@ function animate() {
     stats.end();
 };
 
+//
+// Do some not-so-smart stuff to handle changing examples
+// ---
+
+// Creates a new emitter based on the example
 var newEmitter = function( number ) {
-    if ( ps ) {
+    if ( ps && number) {
         stage.removeChild( ps );
-//        ps = null;
-//        ps = this[ 'example' + number ]();
+        ps = this[ 'example' + number ]();
         stage.addChild( ps );
     }
 };
+
+// This causes a little slowdown on init but so does
+// creating loads of sprites/filters in one batch so...
+var actionMap = (function() {
+    var map = [100];
+
+    map[ 49 ] = '01';   // 1
+    map[ 50 ] = '02';   // 2
+
+    return function( keyCode ) {
+        return map[ keyCode ];
+    };
+})();
 
 // Events
 window.onkeydown = function( event ) {
     // Space
     if ( event.keyCode === 32 ) {
-        if ( ps ) {
-//            stage.removeChild( ps );  // Remove child seems to break things
-            stage.children = [];
-            ps = null;
-        } else {
-            ps = example01();
-            stage.addChild( ps );
-        }
+
     }
 
     // Return
     if ( event.keyCode === 13 ) {
+
     }
 
-    // 1
-    if ( event.keyCode === 49 ) {
-        newEmitter( '01' );
-    }
+    // Will throw errors from time to time but who doesnt like to live dangerously?
+    newEmitter( actionMap( event.keyCode ) );
 };
