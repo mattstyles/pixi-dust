@@ -31,14 +31,14 @@ var texture = new PIXI.Texture.fromImage( './assets/img/particle.png' );
 var i;
 
 var doc = new PIXI.DisplayObjectContainer();
-doc.position.x = 400;
-doc.position.y = 300;
+doc.position.x = 0;
+doc.position.y = 0;
 var spr = null;
 
 for ( i = 0; i < 200; i++ ) {
     spr = new PIXI.Sprite( texture );
-    spr.position.x = ( Math.random() * 200 ) - 100;
-    spr.position.y = ( Math.random() * 200 ) - 100;
+    spr.position.x = ( Math.random() * 800 );
+    spr.position.y = ( Math.random() * 600 );
     spr.scale.x = spr.scale.y = Math.random() * 0.75;
     spr.filters = [ new PIXI.ColorMatrixFilter() ];
     doc.addChild( spr );
@@ -63,39 +63,49 @@ function animate() {
 // Events
 window.onkeydown = function( event ) {
     // Space
-    // `Uncaught TypeError: Cannot read property 'renderable' of null `
+    // Adds 200 sprites/filters directly to stage
     if ( event.keyCode === 32 ) {
-        stage.removeChild( doc );
-        stage.addChild( new PIXI.Sprite( texture ) );
+        for ( i = 0; i < 200; i++ ) {
+            spr = new PIXI.Sprite( texture );
+            spr.position.x = ( Math.random() * 800 );
+            spr.position.y = ( Math.random() * 600 );
+            spr.scale.x = spr.scale.y = Math.random() * 0.75;
+            spr.filters = [ new PIXI.ColorMatrixFilter() ];
+            stage.addChild( spr );
+        }
     }
 
     // Return
+    // Nukes stage children
     if ( event.keyCode === 13 ) {
-        spr = new PIXI.Sprite( texture );
-        spr.position.x = Math.random() * WIDTH;
-        spr.position.y = Math.random() * HEIGHT;
-        stage.addChild( spr );
+        while( stage.children.length > 0 ) {
+            stage.removeChild( stage.children[ 0 ] );
+        }
     }
 
     // 1
-    // `Crashes browser tab`
+    // Removes the container from stage and then readds it
     if ( event.keyCode === 49 ) {
         stage.removeChild( doc );
-        stage.addChild( doc );
+        setTimeout( function() {
+            stage.addChild( doc );
+        },1000 );
     }
 
     // 2
-    // `Uncaught TypeError: Cannot read property 'renderable' of null`
-    // Works fine without filters
+    // Removes and then recreates 200 sprites/filters and adds
+    // them to stage again
     if ( event.keyCode === 50 ) {
+        var size = Math.random() * 300 + 200;
+
         stage.removeChild( doc );
         doc = new PIXI.DisplayObjectContainer();
         doc.position.x = 400;
         doc.position.y = 300;
         for ( i = 0; i < 200; i++ ) {
             spr = new PIXI.Sprite( texture );
-            spr.position.x = ( Math.random() * 200 ) - 100;
-            spr.position.y = ( Math.random() * 200 ) - 100;
+            spr.position.x = ( Math.random() * size ) - size/2;
+            spr.position.y = ( Math.random() * size ) - size / 2;
             spr.scale.x = spr.scale.y = Math.random() * 0.75;
             spr.filters = [ new PIXI.ColorMatrixFilter() ];
             doc.addChild( spr );
