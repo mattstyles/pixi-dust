@@ -1,17 +1,18 @@
 //
-// Example01
+// Example02
 // ---
 
-// Creates a fire effect
+// Purple rain, purple rain
+// Well, slightly more like purple snow
 // Extends the base particle rather than create a new object
 // Also uses a GPU filter to colorize the particles
 
-var example01 = function() {
+var example03 = function() {
     // Statics
-    var COLOR_R = 1.0,  // Try > 1.0 for super-red
-        COLOR_G = 0.85,
-        COLOR_B = 0,
-        SPEC = 1;   // Going to 0 does some crazy stuff, try different coloured backings
+    var COLOR_R = 0.5,
+        COLOR_G = 0,
+        COLOR_B = 0.5,
+        SPEC = 1;
 
     // Grab a texture
     var particleTexture = PIXI.Texture.fromImage( './assets/img/particle.png' );
@@ -36,23 +37,23 @@ var example01 = function() {
                 this.filters = [ this.color ];
             },
             age: function() {
-                this.maxLife = ( Math.random() * 50 ) + 10;
+                this.maxLife = ( Math.random() * 80 ) + 150;
             },
             alpha: function() {
                 this.alpha = 1;
-            }
+            },
         },
         resetExtensions: {
             position: function() {
-                this.position.x = ( Math.random() * 20 ) - 10;
-                this.position.y = ( Math.random() * 20 ) - 10;
+                this.position.x = ( Math.random() * WIDTH );
+                this.position.y = 0;
             },
             velocity: function() {
-                this.velocity.x = ( Math.random() * 1.5 ) - 0.75;
-                this.velocity.y = ( Math.random() * -6 );
+                this.velocity.x = -( Math.random() * 0.25 );
+                this.velocity.y = 6;
             },
             scale: function() {
-                this.scale.x = this.scale.y = (Math.random() * 0.25) + 0.25;
+                this.scale.x = this.scale.y = (Math.random() * 0.25) + 0.1;
             },
             color: function() {
                 this.color.setMatrix( COLOR_R, COLOR_G, COLOR_B, SPEC );
@@ -68,20 +69,16 @@ var example01 = function() {
                 this.scale.y *= 0.99;
             },
             color: function() {
-                this.color.setMatrix( COLOR_R, COLOR_G - this.age, COLOR_B, SPEC );
-            },
-            alpha: function() {
-                this.alpha = 1 - this.age;
+                this.color.setMatrix( COLOR_R + this.age, COLOR_G, COLOR_B + this.age, SPEC );
             }
         }
     };
 
     // Create the particle emitter
     return new ParticleEmitter( {
-        position: new PIXI.Point( 400, 300 ),
-        emitterForces: new PIXI.Point( 0, -0.05 ),
+        position: new PIXI.Point( 0, 0 ),
         texture: particleTexture,
-        maxParticles: 100,
+        maxParticles: 200,
         extendParticle: pExtensions
     } );
 
