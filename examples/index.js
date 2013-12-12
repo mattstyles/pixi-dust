@@ -77,6 +77,7 @@ var actionMap = (function() {
     map[ 50 ] = '02';   // 2
     map[ 51 ] = '03';   // 3
     map[ 52 ] = '04';   // 4
+    map[ 53 ] = '05';   // 5
 
     return function( keyCode ) {
         return map[ keyCode ];

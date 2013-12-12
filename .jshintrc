@@ -1,14 +1,20 @@
 {
   "curly": true,
   "eqeqeq": true,
-  "immed": true,
+  "immed": false,
   "latedef": true,
   "newcap": true,
   "noarg": true,
   "sub": true,
-  "undef": true,
-  "unused": true,
+  "undef": false,
+  "unused": false,
   "boss": true,
   "eqnull": true,
-  "node": true
+  "node": true,
+  "shadow": true,
+  "expr":true,
+
+  "globals": {
+    "PIXI":false
+  }
 }

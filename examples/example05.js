@@ -2,7 +2,7 @@
 // Example04
 // ---
 
-// Burst emitter snow machine
+// Burst emitter plasma jet
 // Creates particles on the fly rather than all in one big lump
 // On each update it'll create new particles if necessary
 // This version also has a burst timer
@@ -60,8 +60,8 @@ BurstEmitter.prototype.createParticle = function( id ) {
 
 
 
-var example04 = function() {
-    var COLOR_R = 0.5,  // Try > 1.0 for super-red
+var example05 = function() {
+    var COLOR_R = 1.2,  // Try > 1.0 for super-red
         COLOR_G = 0.85,
         COLOR_B = 2.0,
         SPEC = 0;
@@ -84,7 +84,7 @@ var example04 = function() {
                     this.matrix[10] = b;
                     this.matrix[15] = a;  // Does some specular shizzle
                 };
-                this.color.setMatrix( COLOR_R, COLOR_G, COLOR_B, SPEC );
+                this.color.setMatrix( COLOR_R - (Math.random * 0.65), COLOR_G - (Math.random * 0.25), COLOR_B * (Math.random * 0.2) + 0.8, SPEC );
                 this.filters = [ this.color ];
             },
             age: function() {
@@ -100,8 +100,8 @@ var example04 = function() {
                 this.position.y = ( Math.random() * 10 ) - 5;
             },
             velocity: function() {
-                this.velocity.x = ( Math.random() * 2 ) + 2;
-                this.velocity.y = ( Math.random() * 3 ) - 5;
+                this.velocity.x = ( Math.random() * 0.4 ) + 2;
+                this.velocity.y = ( Math.random() * 0.5 ) - 5;
             },
             scale: function() {
                 this.scale.x = this.scale.y = (Math.random() * 0.25) + 0.1;
@@ -110,7 +110,7 @@ var example04 = function() {
                 this.alpha = 1;
             },
             color: function() {
-                this.color.setMatrix( COLOR_R, COLOR_G, COLOR_B, SPEC );
+                this.color.setMatrix( COLOR_R - (Math.random * 0.15), COLOR_G - (Math.random * 0.25), COLOR_B * (Math.random * 0.2) + 0.8, SPEC );
             }
         },
         updateExtensions: {
@@ -119,11 +119,12 @@ var example04 = function() {
                 this.position.y += this.velocity.y
             },
             scale: function() {
-                this.scale.x *= 0.995;
-                this.scale.y *= 0.995;
+                this.scale.x *= 1.025;
+                this.scale.y *= 1.025;
             },
             alpha: function() {
-                this.alpha = 1 - Math.sqrt( this.age );
+//                this.alpha = 1 - (this.age * this.age)
+                this.alpha = 1 - this.age;
             },
             color: function() {
                 this.color.setMatrix( COLOR_R + ( this.age * ( 1 - COLOR_R ) ), COLOR_G + ( this.age * ( 1 - COLOR_G ) ), COLOR_B, SPEC );
@@ -136,7 +137,7 @@ var example04 = function() {
         emitterForces: new PIXI.Point( 0, 0.05 ),
         maxParticles: 100,
         burstAmount: 3,
-        burstTimer: 60,
+        burstTimer: 20,
         texture: particleTexture,
         extendParticle: pExtensions
     } );
